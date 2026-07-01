@@ -33,7 +33,7 @@ The example below demonstrates how to use DInvoke to dynamically find and call e
 4) Use GetLibraryAddress to find an export within ntdll.dll by keyed hash.
 5) Given the base address of ntdll.dll that we found earlier, use GetExportAddress to find an export within the module in memory by name.
 
-```
+```nim
 ## Author: b33f (@FuzzySec, Ruben Boonen)
 import strformat, system
 import DynamicInvoke/Generic
