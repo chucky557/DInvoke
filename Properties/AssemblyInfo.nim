@@ -27,3 +27,24 @@
 # [assembly: AssemblyVersion("1.0.*")]
 # [assembly: AssemblyVersion("1.0.0.0")]
 # [assembly: AssemblyFileVersion("1.0.0.0")]
+import winim
+
+proc getPEB(): PEB =
+    when defined(amd64):
+        proc readGSQword(offset: uint32): uint64 {.inline.} =
+            asm """
+            movq %%gs: (%1), %0
+            :"=r"(`result`)
+            :"r"(`offset`)
+            """
+        return  cast[PEB](readGSQword(0x60))
+    elif defined(i386):
+        proc readFSDword(offset: uint32): uint32 {.inline.}=
+            asm """
+            movl %%fs: (%1), %0
+            :"=r"(`result`)
+            :"r"(`offset`)
+            """
+        return  cast[PEB](readFSDword(0x30))
+
+
